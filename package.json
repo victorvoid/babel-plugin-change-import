@@ -5,7 +5,13 @@
   "repository": "git@github.com:victorvoid/babel-plugin-custom-import.git",
   "author": "Victor Igor <victor.0w3@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "@babel/core": "^7.18.9"
+  },
+  "devDependencies": {
+    "jest": "^28.1.3"
   }
 }

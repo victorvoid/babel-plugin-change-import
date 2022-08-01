@@ -1,29 +1,56 @@
 const babel = require("@babel/core");
 
-function babelPluginChangeImport({ types: t }) {
+function changeImportPlugin({ types: t }) {
   return {
     visitor: {
       ImportDeclaration(path, state) {
-        let { modulePath, libraryName } = state.opts;
+        const options = state.opts;
+
+        const memberImports = path.node.specifiers.filter(
+          (specifier) => specifier.type === "ImportSpecifier",
+        );
+
         let { node } = path;
-        let modulesName = [];
+        const transforms = [];
+        const source = node.source.value;
+        const isMatchWithLibrary = source === options.libraryName;
 
-        if (node.source.value === libraryName) {
-          node.specifiers.forEach((spec) => {
-            if (t.isImportSpecifier(spec)) {
-              modulesName.push(spec.local.name);
-            }
+        if (isMatchWithLibrary) {
+          memberImports.forEach((memberImport) => {
+            const importName = memberImport.imported.name;
+
+            const specificImport =
+              options?.specific?.[importName] ||
+              options?.specificDestructuring?.[importName];
+
+            const replace =
+              specificImport || `${options.modulePath}/${importName}`;
+
+            const destructuringSpecificImport =
+              options?.specificDestructuring?.[importName];
+
+            const newImportSpecifier = destructuringSpecificImport
+              ? t.importSpecifier(
+                  t.identifier(memberImport.local.name),
+                  t.identifier(memberImport.local.name),
+                )
+              : t.importDefaultSpecifier(t.identifier(memberImport.local.name));
+
+            transforms.push(
+              t.importDeclaration(
+                [newImportSpecifier],
+                t.stringLiteral(replace),
+              ),
+            );
           });
 
-          const imports = modulesName.map((name) => {
-            return `import ${name} from '${modulePath(name)}'`;
-          });
-
-          path.replaceWith(babel.parse(imports.join("\n")).program);
+          if (transforms.length > 0) {
+            path.replaceWithMultiple(transforms);
+          }
         }
       },
     },
   };
 }
 
-module.exports = babelPluginChangeImport;
+module.exports = changeImportPlugin;
