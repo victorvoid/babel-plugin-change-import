@@ -1,4 +1,5 @@
-# babel-plugin-change-import
+# babel-plugin-change-import [![Build Status](https://travis-ci.org/victorvoid/babel-plugin-change-import.svg?branch=master)](https://travis-ci.org/victorvoid/babel-plugin-change-import)
+
 
 This plugin is a transform to remove unused library dependencies, without forcing the user to cherry pick import manually. This lets you use libraries naturally without worrying about bundling parts you're not using.
 
@@ -15,9 +16,9 @@ yarn add babel-plugin-change-import -S
 
 ## Example
 
-.babelrc
+###### `.babelrc` (Recommended)
 
-```
+```json
 {
   "plugins": [
       ["change-import", {
@@ -28,12 +29,13 @@ yarn add babel-plugin-change-import -S
 }
 ```
 
-Your code
+Transforms
+
 ```js
 import { Button, Input, Text} from '@company/ds'
 ```
 
-generate to:
+to
 
 ```js
 import Button from '@company/ds/components/Button'
@@ -47,9 +49,9 @@ You can to specific your imports
 
 ## 1. "specific"
 
-.babelrc
+###### .babelrc
 
-```
+```json
 {
   "plugins": [
       ["change-import", {
@@ -63,12 +65,12 @@ You can to specific your imports
 }
 ```
 
-Your code
+Transforms
 ```js
 import { Button, configure } from '@company/ds'
 ```
 
-generate to:
+to
 
 ```js
 import Button from '@company/ds/components/Button'
@@ -77,9 +79,9 @@ import configure from '@company/ds/configure'
 
 ## 2. "specificDestructuring"
 
-.babelrc
+###### .babelrc
 
-```
+```json
 {
   "plugins": [
       ["change-import", {
@@ -93,12 +95,12 @@ import configure from '@company/ds/configure'
 }
 ```
 
-Your code
+Transforms
 ```js
 import { Button, useAlert } from '@company/ds'
 ```
 
-generate to:
+to
 
 ```js
 import Button from '@company/ds/components/Button'

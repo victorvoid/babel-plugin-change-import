@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-change-import",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "index.js",
   "repository": "git@github.com:victorvoid/babel-plugin-custom-import.git",
   "author": "Victor Igor <victor.0w3@gmail.com>",
