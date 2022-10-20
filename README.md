@@ -58,7 +58,7 @@ You can to specific your imports
         "libraryName": "@company/ds",
         "modulePath": "@company/ds/components",
         "specific": {
-            "configure": "@mobi/ds/configure",
+            "configure": "@company/ds/configure",
         },
       }]
     ]
@@ -88,7 +88,7 @@ import configure from '@company/ds/configure'
         "libraryName": "@company/ds",
         "modulePath": "@company/ds/components",
         "specificDestructuring": {
-            "useAlert": "@mobi/ds/components/Alert",
+            "useAlert": "@company/ds/components/Alert",
         },
       }]
     ]
